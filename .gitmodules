@@ -1,0 +1,3 @@
+[submodule "shared-schema"]
+	path = shared-schema
+	url = https://github.com/Since120/pyro-db-schema
