@@ -1,0 +1,33 @@
+{
+  "compilerOptions": {
+    // Zielversion von JS (kannst du natürlich anpassen, z.B. "ES2022")
+    "target": "ES2020",
+
+    // commonjs, da Node.js-Umgebung
+    "module": "commonjs",
+
+    // Wo liegen deine TS-Dateien
+    "rootDir": "src",
+    // Wohin wird kompiliert
+    "outDir": "dist",
+
+    // Strenge Typisierung, sehr empfehlenswert
+    "strict": true,
+
+    // Erlaubt z.B. Import von Standardmodulen ohne explizites .default
+    "esModuleInterop": true,
+
+    // Beschleunigt Kompilierung ein wenig (üblicherweise eingeschaltet)
+    "skipLibCheck": true,
+
+    // Optional: mappt generierte JS zurück auf TS
+    // (damit du im Debugger den Original-TS-Code siehst)
+    "sourceMap": true,
+
+    // Optional: bei Node in moderner Version:
+    // "moduleResolution": "node",
+    // "lib": ["ES2020"]
+  },
+  "include": ["src"],
+  "exclude": ["node_modules"]
+}

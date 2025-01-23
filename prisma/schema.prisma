@@ -1,0 +1,86 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id        String   @id @default(cuid())
+  username  String?
+  email     String?   @unique
+  createdAt DateTime @default(now())
+}
+
+model Zone {
+  id              String   @id @default(cuid())
+  zoneKey         String   @unique
+  zoneName        String
+  minutesRequired Int      @default(60)
+  pointsGranted   Int      @default(1)
+  createdAt       DateTime @default(now())
+}
+
+model SetupChannels {
+  id              String   @id @default(cuid())
+  categoryId      String
+  textChannelId   String
+  voiceChannelId  String
+  createdAt       DateTime @default(now())
+}
+
+model DynamicVoiceChannel {
+  id             String   @id @default(cuid())
+  channelId      String   @unique
+  zoneKey        String?
+  createdByUser  String?
+  createdAt      DateTime @default(now())
+  allowedUsers   String[] @default([])
+  blockedUsers   String[] @default([]) 
+}
+
+model UserTracking {
+  id             String   @id @default(cuid())
+  userId         String   @unique
+  isTracked      Boolean  @default(false)
+  createdAt      DateTime @default(now())
+}
+
+model RoleConfig {
+  id        String  @id @default(cuid())
+  roleKey   String
+  roleId    String
+  createdAt DateTime @default(now())
+
+  @@unique([roleKey], map: "unique_roleKey")
+}
+
+model AdminSettings {
+  id                  String   @id @default(cuid())
+  voiceCategoryId     String?  // neu: optional, speichert CategoryChannel-ID
+  // ... 
+}
+
+model UserZoneStats {
+  id                 String   @id @default(cuid())
+  userId             String
+  zoneKey            String
+  totalSecondsInZone Int      @default(0)
+  leftoverSeconds    Int      @default(0)
+  pointsInThisZone   Int      @default(0)
+  lastJoinTimestamp  DateTime?
+  lastUsage          DateTime?
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+}
+
+model UserGlobalStats {
+  id                  String   @id @default(cuid())
+  userId              String   @unique
+  totalPoints         Int      @default(0)
+  totalTimeInAllZones Int      @default(0)
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+}
